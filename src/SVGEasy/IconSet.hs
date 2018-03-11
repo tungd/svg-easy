@@ -8,7 +8,7 @@ import Data.Aeson
 import RIO
 import RIO.FilePath
 import RIO.List
-import System.FilePath.Find hiding (fold)
+import System.FilePath.Find
 
 import qualified System.FilePath.Find as FP
 import qualified RIO.ByteString.Lazy as BL
