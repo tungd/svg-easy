@@ -23,9 +23,11 @@ type SVGEasyAPI = Raw
 start :: IO ()
 start = do
   options <- logOptionsHandle stdout True
-  withLogFunc options $ \envLogFunc -> runEnv 4000
-    $ staticPolicy (defaultIndex >-> addBase "public")
-    $ serve api $ enter (nt Env{..}) app
+  withLogFunc options $ \envLogFunc -> do
+    envIconSetList <- runRIO envLogFunc (findIconSets "resources")
+    runEnv 4000
+      $ staticPolicy (defaultIndex >-> addBase "public")
+      $ serve api $ enter (nt Env{..}) app
   where
     api = Proxy :: Proxy SVGEasyAPI
     nt env = NT (Servant.Handler . runRIO env)

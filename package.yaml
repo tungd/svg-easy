@@ -27,6 +27,7 @@ dependencies:
 - warp
 - servant-server
 - aeson
+- filepath
 
 default-extensions:
 - NoImplicitPrelude
