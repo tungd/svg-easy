@@ -1,0 +1,32 @@
+<div class="collapsible">
+  <h3 class="collapsible__header"
+      on-click="toggle">{{title}}</h3>
+  <div class="collapsible__content collapsible__content-{{collapsed?'off':'on'}}">
+    {{yield}}
+  </div>
+</div>
+
+<style>
+  .collapsible__content {
+    overflow: scroll
+  }
+  .collapsible__content-off {
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+</style>
+
+<script>
+  component.exports = {
+    data: {
+      collapsed: false
+    },
+
+    on: {
+      toggle: function() {
+        this.set('collapsed', !this.get('collapsed'));
+      }
+    }
+  }
+</script>
