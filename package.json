@@ -19,7 +19,7 @@
     "brunch": "^2",
     "clean-css-brunch": "^2",
     "less-brunch": "^2.10.0",
-    "ractive-component-brunch": "^0.9.14",
+    "ractive-component-brunch": "^0.9.15",
     "uglify-js-brunch": "^2"
   }
 }
