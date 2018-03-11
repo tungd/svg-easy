@@ -5,11 +5,11 @@ import RIO
 import RIO.Char
 
 
-dropPrefixOptions :: Options
-dropPrefixOptions = defaultOptions { fieldLabelModifier = dropPrefix }
+dropLabelPrefixOptions :: Options
+dropLabelPrefixOptions = defaultOptions { fieldLabelModifier = dropLabelPrefix }
 
-dropPrefix :: String -> String
-dropPrefix [] = []
-dropPrefix (x:xs)
+dropLabelPrefix :: String -> String
+dropLabelPrefix [] = []
+dropLabelPrefix (x:xs)
   | isUpper x = toLower x : xs
-  | otherwise = dropPrefix xs
+  | otherwise = dropLabelPrefix xs
