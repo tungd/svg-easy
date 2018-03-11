@@ -17,7 +17,7 @@ instance HasLogFunc Env where
   logFuncL = lens envLogFunc (\e f -> e { envLogFunc = f })
 
 
-type SVGEasyAPI = Raw
+type SVGEasyAPI = "icon-sets" :> Get '[JSON] [IconSet]
 
 
 start :: IO ()
@@ -36,5 +36,7 @@ defaultIndex :: Policy
 defaultIndex = policy $ \path ->
   Just $ if path == "" then "index.html" else path
 
-app :: (HasLogFunc env) => ServerT SVGEasyAPI (RIO env)
-app = undefined
+app :: ServerT SVGEasyAPI (RIO Env)
+app = listIconSet
+  where
+    listIconSet = asks envIconSetList
