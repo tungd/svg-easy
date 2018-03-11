@@ -1,0 +1,72 @@
+name:                svg-easy
+version:             0.1.0.0
+github:              "tungd/svg-easy"
+license:             Apache-2.0
+author:              "Tung Dao"
+maintainer:          "me@tungdao.com"
+copyright:           "(c) 2018 Tung Dao"
+
+extra-source-files:
+- README.md
+- ChangeLog.md
+
+# Metadata used when publishing your package
+# synopsis:            Short description of your package
+# category:            Web
+
+# To avoid duplicated efforts in documentation and dealing with the
+# complications of embedding Haddock markup inside cabal files, it is
+# common to point users to the README.md file.
+description:         Please see the README on Github at <https://github.com/tungd/svg-easy#readme>
+
+dependencies:
+- base >= 4.7 && < 5
+- rio
+- wai
+- warp
+- servant-server
+- aeson
+
+default-extensions:
+- NoImplicitPrelude
+- OverloadedStrings
+- OverloadedLists
+- ScopedTypeVariables
+- GeneralizedNewtypeDeriving
+- DeriveGeneric
+- DeriveDataTypeable
+- RecordWildCards
+- LambdaCase
+- TypeOperators
+- DataKinds
+- KindSignatures
+- MultiParamTypeClasses
+
+ghc-options:
+- -Wall
+- -O2
+
+library:
+  source-dirs: src
+
+executables:
+  svg-easy-exe:
+    main:                Main.hs
+    source-dirs:         app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - svg-easy
+
+tests:
+  svg-easy-test:
+    main:                Spec.hs
+    source-dirs:         test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - svg-easy

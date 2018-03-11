@@ -1,0 +1,5 @@
+.DS_Store
+.stack-work/
+*.cabal
+node_modules/
+public/

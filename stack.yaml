@@ -1,0 +1,5 @@
+resolver: lts-10.8
+packages:
+- .
+extra-deps:
+- rio-0.0.3.0

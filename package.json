@@ -1,0 +1,23 @@
+{
+  "name": "svg-easy",
+  "description": "Source code of svgeasy.com.",
+  "private": true,
+  "author": "Tung Dao <me@tungdao.com>",
+  "version": "0.0.1",
+  "repository": "",
+  "scripts": {
+    "start": "brunch watch --server",
+    "build": "brunch build --production"
+  },
+  "dependencies": {
+    "tachyons": "^4.9.1"
+  },
+  "devDependencies": {
+    "auto-reload-brunch": "^2",
+    "brunch": "^2",
+    "clean-css-brunch": "^2",
+    "less-brunch": "^2.10.0",
+    "ractive-component-brunch": "^0.9.14",
+    "uglify-js-brunch": "^2"
+  }
+}
