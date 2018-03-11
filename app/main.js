@@ -1,4 +1,2 @@
-document.addEventListener('DOMContentLoaded', function() {
-  // do your setup here
-  console.log('Initialized app');
-});
+const SVGBuilder = require('builder.html')
+const builder = new SVGBuilder({ el: '#main' })

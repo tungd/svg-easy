@@ -6,14 +6,16 @@
   "version": "0.0.1",
   "repository": "",
   "scripts": {
-    "start": "brunch watch --server",
+    "start": "brunch watch",
     "build": "brunch build --production"
   },
   "dependencies": {
+    "ractive": "^0.9.13",
     "tachyons": "^4.9.1"
   },
   "devDependencies": {
-    "auto-reload-brunch": "^2",
+    "babel-brunch": "^6.1.1",
+    "babel-preset-env": "^1.6.1",
     "brunch": "^2",
     "clean-css-brunch": "^2",
     "less-brunch": "^2.10.0",

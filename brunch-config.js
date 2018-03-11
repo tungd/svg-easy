@@ -1,6 +1,8 @@
 exports.files = {
   javascripts: {
-    joinTo: 'app.js'
+    entryPoints: {
+      'app/main.js': 'app.js'
+    }
   },
 
   stylesheets: {
@@ -11,5 +13,15 @@ exports.files = {
 exports.modules = {
   autoRequire: {
     'app.js': ['main']
+  }
+}
+
+exports.plugins = {
+  babel: {
+    presets: [['env', {
+      targets: {
+        browsers: ['last 2 versions']
+      }
+    }]]
   }
 }
