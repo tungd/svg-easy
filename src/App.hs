@@ -27,6 +27,7 @@ start = do
     envIconSetList <- runRIO envLogFunc (findIconSets "resources")
     runEnv 4000
       $ staticPolicy (defaultIndex >-> addBase "public")
+      $ staticPolicy (addBase "resources")
       $ serve api $ enter (nt Env{..}) app
   where
     api = Proxy :: Proxy SVGEasyAPI

@@ -1,7 +1,7 @@
 module SVGEasy.IconSet
   ( IconSet(..)
   , findIconSets
-  , iconName
+  , normalizeIconName
   ) where
 
 import Data.Aeson
@@ -46,12 +46,12 @@ readIconSet iss fp = decode <$> liftIO (BL.readFile fp) >>= \case
   Nothing -> pure iss
   Just is' -> do
     icons <- liftIO $ FP.find always (extension ==? ".svg") root
-    pure (is' { isIconList = iconName root <$> icons } : iss)
+    pure (is' { isIconList = normalizeIconName root <$> icons } : iss)
   where
     root = takeDirectory fp
 
-iconName :: FilePath -> FilePath -> Text
-iconName root fp = fromString
+normalizeIconName :: FilePath -> FilePath -> Text
+normalizeIconName root fp = fromString
   . intercalate "-" . splitDirectories
   . dropExtension
   $ dropPrefix (root <> "/") fp
