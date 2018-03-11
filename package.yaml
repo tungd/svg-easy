@@ -27,7 +27,7 @@ dependencies:
 - warp
 - servant-server
 - aeson
-- filepath
+- filemanip
 
 default-extensions:
 - NoImplicitPrelude

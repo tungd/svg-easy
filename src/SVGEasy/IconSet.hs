@@ -1,14 +1,16 @@
 module SVGEasy.IconSet
   ( IconSet(..)
   , findIconSets
+  , iconName
   ) where
 
 import Data.Aeson
-import Data.List
 import RIO
-import RIO.Directory
-import System.FilePath
+import RIO.FilePath
+import RIO.List
+import System.FilePath.Find hiding (fold)
 
+import qualified System.FilePath.Find as FP
 import qualified RIO.ByteString.Lazy as BL
 
 import Data.Aeson.Config
@@ -24,30 +26,32 @@ data IconSet = IconSet
   } deriving (Show, Generic)
 
 instance ToJSON IconSet where
-  toJSON = genericToJSON dropPrefixOptions
+  toJSON = genericToJSON dropLabelPrefixOptions
 
 instance FromJSON IconSet where
-  parseJSON = genericParseJSON dropPrefixOptions
+  parseJSON = genericParseJSON dropLabelPrefixOptions
 
 
 findIconSets
   :: (HasLogFunc env)
   => FilePath -> RIO env [IconSet]
 findIconSets fp = do
-  fps <- liftIO $ getDirectoryContents fp
-  is <- foldM (loadIconSet' fp) [] fps
-  pure is
+  iss <- liftIO $ FP.find always (filePath ~~? "**/set.json") fp
+  foldM readIconSet [] iss
 
-loadIconSet'
+readIconSet
   :: (HasLogFunc env)
-  => FilePath -> [IconSet] -> FilePath -> RIO env [IconSet]
-loadIconSet' root iss fp
-  | "." `isPrefixOf` fp = pure iss
-  | otherwise = do
-      is :: Maybe IconSet <- decode <$> liftIO (BL.readFile definition)
-      case is of
-        Nothing -> pure iss
-        Just is' ->
-          pure (is' : iss)
+  => [IconSet] -> FilePath -> RIO env [IconSet]
+readIconSet iss fp = decode <$> liftIO (BL.readFile fp) >>= \case
+  Nothing -> pure iss
+  Just is' -> do
+    icons <- liftIO $ FP.find always (extension ==? ".svg") root
+    pure (is' { isIconList = iconName root <$> icons } : iss)
   where
-    definition = root </> fp </> "set.json"
+    root = takeDirectory fp
+
+iconName :: FilePath -> FilePath -> Text
+iconName root fp = fromString
+  . intercalate "-" . splitDirectories
+  . dropExtension
+  $ dropPrefix (root <> "/") fp
