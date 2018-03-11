@@ -1,6 +1,6 @@
 <div class="collapsible">
   <h3 class="collapsible__header"
-      on-click="toggle">{{title}}</h3>
+      on-click="toggle">{{ yield title }}</h3>
   <div class="collapsible__content collapsible__content-{{collapsed?'off':'on'}}">
     {{yield}}
   </div>

@@ -8,7 +8,17 @@
   </div>
   <div class="pa3 bt">
     {{#sets}}
-    <collapsible title="{{name}}">
+    <collapsible>
+      {{#partial title}}
+      {{name}}
+      <small class="ml3 gray fw4">
+        {{version}} - License: {{license}} -
+        <a href="{{homepage}}" title="Home page" target="_blank" rel="noopener">
+          {{homepage}}
+        </a>
+      </small>
+      {{/partial}}
+
       {{#icons}}
       <div class="icon pa3">{{{data}}}</div>
       {{/icons}}
@@ -20,17 +30,7 @@
 <script>
   component.exports = {
     data: () => ({
-      sets: [{
-        name: 'Font Awesome',
-        version: 'v4.7.0',
-        description: 'by Dave Gandy',
-        license: 'SIL',
-        homepage: 'https://fontawesome.com',
-        icons: [{
-          name: 'search',
-          data: '<svg class="search-icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><style type="text/css">.st0{fill:none;stroke:#333;stroke-width:2;stroke-miterlimit:10;}</style><line class="st0" x1="10.5" y1="10.5" x2="15.3" y2="15.3"></line><circle class="st0" cx="6.8" cy="6.8" r="5.8"></circle></svg>'
-        }]
-      }]
+      sets: []
     })
   }
 </script>
