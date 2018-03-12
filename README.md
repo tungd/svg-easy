@@ -1,5 +1,19 @@
 # svgeasy.com
 
+## Features
+
+- [ ] Favicon and icon
+- [ ] About page
+- [ ] Help page
+- [ ] Donation link
+- [ ] Service worker
+- [ ] Customize tab
+- [ ] Download tab
+- [ ] API document page
+- [ ] API
+- [ ] More icon set
+- [ ] SEO: Twitter, open Github
+
 ## License
 
 Copyright 2018 Tung Dao
