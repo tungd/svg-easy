@@ -26,7 +26,7 @@
 
       <div class="flex flex-wrap">
         {{#iconList}}
-        <div class="icon pa3" {{#hidden}}hidden{{/hidden}}>
+        <div class="icon pa3 pointer selected-{{selected}} hidden-{{hidden}}" on-click="select">
           <svg class="w-100 h-100">
             <use xlink:href="font-awesome.svg#{{name}}"/>
           </svg>
@@ -38,12 +38,29 @@
   </div>
 </div>
 
+<style>
+  .selected-true {
+    border: 1px solid #36c;
+  }
+  .hidden-true {
+    display: none;
+  }
+</style>
+
 <script>
   component.exports = {
     data: () => ({
       filter: '',
       sets: []
     }),
+
+    on: {
+      select: function(e) {
+        const keypath = e.get('@keypath')
+        const selected = e.get('selected')
+        this.set(`${keypath}.selected`, !selected)
+      }
+    },
 
     observe: {
       filter: function(value, _) {
