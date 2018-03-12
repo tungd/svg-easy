@@ -9,7 +9,9 @@
 
   <div class="pa3 bt">
     <form>
-      <input name="filter" type="search" value="{{filter}}"/>
+      <input name="filter" type="search" value="{{filter}}" placeholder="Search"/>
+      <input id="size" name="size" type="range" min="16" max="128" value="{{size}}"/>
+      <label for="size">{{size}}px</label>
     </form>
 
     {{#sets}}
@@ -26,10 +28,12 @@
 
       <div class="flex flex-wrap">
         {{#iconList}}
-        <div class="icon pa3 pointer selected-{{selected}} hidden-{{hidden}}" on-click="select">
-          <svg class="w-100 h-100">
-            <use xlink:href="font-awesome.svg#{{name}}"/>
-          </svg>
+        <div class="icon pa3 ma2 pointer selected-{{selected}} hidden-{{hidden}}" on-click="select">
+          <div class="sizer">
+            <svg class="w-100 h-100">
+              <use xlink:href="font-awesome.svg#{{name}}"/>
+            </svg>
+          </div>
         </div>
         {{/iconList}}
       </div>
@@ -51,10 +55,19 @@
   component.exports = {
     data: () => ({
       filter: '',
+      size: 24,
       sets: []
     }),
 
     on: {
+      init: function() {
+        const size = this.get('size')
+        const styleElement = document.createElement('style')
+        styleElement.innerHTML = `.sizer{width:${size}px;height:${size}px}`
+        styleElement.setAttribute('id', 'builder-style')
+        document.head.appendChild(styleElement)
+      },
+
       select: function(e) {
         const keypath = e.get('@keypath')
         const selected = e.get('selected')
@@ -63,19 +76,26 @@
     },
 
     observe: {
-      filter: function(value, _) {
-        if (value) {
+      filter: function(filter, _) {
+        if (filter) {
           this.get('sets').forEach((iconSet, setIndex) => {
             iconSet.iconList.forEach((icon, iconIndex) => {
               this.set(
                 `sets.${setIndex}.iconList.${iconIndex}.hidden`,
                 // TODO: search support synonym
-                !(new RegExp(value, 'i')).test(icon.name)
+                !(new RegExp(filter, 'i')).test(icon.name)
               )
             })
           })
         } else {
           this.set('sets.*.iconList.*.hidden', false)
+        }
+      },
+
+      size: function(size, _) {
+        const styleElement = document.querySelector('#builder-style')
+        if (styleElement) {
+          styleElement.innerHTML = `.sizer{width:${size}px;height:${size}px}`
         }
       }
     }
