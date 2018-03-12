@@ -1,4 +1,5 @@
 {
+  "id": "font-awesome",
   "name": "Font Awesome Free",
   "version": "v5.0.8",
   "description": "The internet's most popular icon toolkit has been redesigned and built from scratch. On top of this, features like icon font ligatures, an SVG framework, official NPM packages for popular frontend libraries like React, and access to a new CDN.",

@@ -19,7 +19,8 @@ import Data.Aeson.Config
 
 
 data IconSetMeta = IconSetMeta
-  { isName        :: Text
+  { isId          :: Text
+  , isName        :: Text
   , isVersion     :: Text
   , isDescription :: Text
   , isLicense     :: Text
