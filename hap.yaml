@@ -1,0 +1,13 @@
+deploy_path: '/var/www/svg-easy'
+host: 172.104.54.197
+port: 22
+repo: 'git@github.com:tungd/svg-easy.git'
+revision: origin/master
+build_script:
+  - npm install
+  - npm run build
+  - stack setup
+  - stack build
+  - cp config/svg-easy.service /etc/systemd/system
+  - systemctl daemon-reload
+restart_command: systemctl restart svg-easy

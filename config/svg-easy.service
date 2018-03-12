@@ -1,0 +1,14 @@
+[Unit]
+Description=svg-easy-exe
+After=network-online.target
+Wants=network-online.target systemd-networkd-wait-online.service
+
+[Service]
+Restart=on-abnormal
+Environment=ENV=production
+Environment=PORT=4001
+WorkingDirectory=/var/www/svg-easy/current
+ExecStart=/var/www/svg-easy/current/.stack-work/dist/x86_64-linux-nopie/Cabal-2.0.1.0/build/svg-easy-exe/svg-easy-exe
+
+[Install]
+WantedBy=multi-user.target
