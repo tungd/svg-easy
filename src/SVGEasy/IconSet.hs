@@ -1,6 +1,7 @@
 module SVGEasy.IconSet
   ( IconSet(..)
   , IconSetMeta(..)
+  , Icon(..)
   , loadIconSet
   ) where
 
@@ -23,7 +24,7 @@ data IconSetMeta = IconSetMeta
   , isDescription :: Text
   , isLicense     :: Text
   , isHomepage    :: Text
-  , isIconList    :: [Text]
+  , isIconList    :: [Icon]
   } deriving (Show, Generic)
 
 instance ToJSON IconSetMeta where
@@ -39,6 +40,15 @@ data IconSet = IconSet
 
 instance ToJSON IconSet where
   toJSON = toJSON . isMeta
+
+data Icon = Icon { iName :: Text }
+  deriving (Show, Generic)
+
+instance ToJSON Icon where
+  toJSON = genericToJSON dropLabelPrefixOptions
+
+instance FromJSON Icon where
+  parseJSON = genericParseJSON dropLabelPrefixOptions
 
 
 loadIconSet
@@ -57,13 +67,13 @@ loadIconSet fp = eitherDecode <$> liftIO (BL.readFile fp) >>= \case
 
 loadIcon
   :: (HasLogFunc env)
-  => ([Tree], [Text]) -> FilePath -> RIO env ([Tree], [Text])
+  => ([Tree], [Icon]) -> FilePath -> RIO env ([Tree], [Icon])
 loadIcon (els, ns) fp = liftIO (loadSvgFile fp) >>= \case
   Nothing  -> pure (els, ns)
   Just doc@Document{..} -> pure (symbol : els, name : ns)
     where
       symbol = SymbolTree (toSymbol doc)
-      name = fromString (takeBaseName _documentLocation)
+      name = Icon $ fromString (takeBaseName _documentLocation)
 
 toSymbol :: Document -> Symbol Tree
 toSymbol Document{..} = defaultSvg

@@ -6,7 +6,12 @@
     <h2 class="f4 gray mv0 pv2 ph3 pointer">Customize Names</h2>
     <h2 class="f4 gray mv0 pv2 ph3 pointer">Download</h2>
   </div>
+
   <div class="pa3 bt">
+    <form>
+      <input name="filter" type="search" value="{{filter}}"/>
+    </form>
+
     {{#sets}}
     <collapsible>
       {{#partial title}}
@@ -21,9 +26,9 @@
 
       <div class="flex flex-wrap">
         {{#iconList}}
-        <div class="icon pa3">
+        <div class="icon pa3" {{#hidden}}hidden{{/hidden}}>
           <svg class="w-100 h-100">
-            <use xlink:href="font-awesome.svg#{{.}}"/>
+            <use xlink:href="font-awesome.svg#{{name}}"/>
           </svg>
         </div>
         {{/iconList}}
@@ -36,7 +41,26 @@
 <script>
   component.exports = {
     data: () => ({
+      filter: '',
       sets: []
-    })
+    }),
+
+    observe: {
+      filter: function(value, _) {
+        if (value) {
+          this.get('sets').forEach((iconSet, setIndex) => {
+            iconSet.iconList.forEach((icon, iconIndex) => {
+              this.set(
+                `sets.${setIndex}.iconList.${iconIndex}.hidden`,
+                // TODO: search support synonym
+                !(new RegExp(value, 'i')).test(icon.name)
+              )
+            })
+          })
+        } else {
+          this.set('sets.*.iconList.*.hidden', false)
+        }
+      }
+    }
   }
 </script>
