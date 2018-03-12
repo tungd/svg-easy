@@ -28,6 +28,7 @@ dependencies:
 - servant-server
 - aeson
 - filemanip
+- svg-tree
 
 default-extensions:
 - NoImplicitPrelude

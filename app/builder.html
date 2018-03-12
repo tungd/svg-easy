@@ -19,9 +19,15 @@
       </small>
       {{/partial}}
 
-      {{#icons}}
-      <div class="icon pa3">{{{data}}}</div>
-      {{/icons}}
+      <div class="flex flex-wrap">
+        {{#iconList}}
+        <div class="icon pa3">
+          <svg class="w-100 h-100">
+            <use xlink:href="font-awesome.svg#{{.}}"/>
+          </svg>
+        </div>
+        {{/iconList}}
+      </div>
     </collapsible>
     {{/sets}}
   </div>

@@ -1,22 +1,23 @@
 module SVGEasy.IconSet
   ( IconSet(..)
-  , findIconSets
-  , normalizeIconName
+  , IconSetMeta(..)
+  , loadIconSet
   ) where
 
 import Data.Aeson
+import Graphics.Svg hiding (Text)
 import RIO
 import RIO.FilePath
-import RIO.List
 import System.FilePath.Find
 
-import qualified System.FilePath.Find as FP
 import qualified RIO.ByteString.Lazy as BL
+import qualified RIO.Map as M
+import qualified System.FilePath.Find as FP
 
 import Data.Aeson.Config
 
 
-data IconSet = IconSet
+data IconSetMeta = IconSetMeta
   { isName        :: Text
   , isVersion     :: Text
   , isDescription :: Text
@@ -25,33 +26,51 @@ data IconSet = IconSet
   , isIconList    :: [Text]
   } deriving (Show, Generic)
 
-instance ToJSON IconSet where
+instance ToJSON IconSetMeta where
   toJSON = genericToJSON dropLabelPrefixOptions
 
-instance FromJSON IconSet where
+instance FromJSON IconSetMeta where
   parseJSON = genericParseJSON dropLabelPrefixOptions
 
+data IconSet = IconSet
+  { isMeta   :: IconSetMeta
+  , isSprite :: Document
+  } deriving (Show)
 
-findIconSets
+instance ToJSON IconSet where
+  toJSON = toJSON . isMeta
+
+
+loadIconSet
   :: (HasLogFunc env)
-  => FilePath -> RIO env [IconSet]
-findIconSets fp = do
-  iss <- liftIO $ FP.find always (filePath ~~? "**/set.json") fp
-  foldM readIconSet [] iss
+  => FilePath -> RIO env (Either String IconSet)
+loadIconSet fp = eitherDecode <$> liftIO (BL.readFile fp) >>= \case
+  Left e     -> pure (Left e)
+  Right meta -> do
+    svgs <- liftIO $ FP.find always (extension ==? ".svg") root
+    (icons, names) <- foldM loadIcon ([], []) svgs
+    pure . Right $ IconSet (meta { isIconList = names }) $ emptyDocument
+      & set documentLocation fp
+      & set elements icons
+    where
+      root = takeDirectory fp
 
-readIconSet
+loadIcon
   :: (HasLogFunc env)
-  => [IconSet] -> FilePath -> RIO env [IconSet]
-readIconSet iss fp = decode <$> liftIO (BL.readFile fp) >>= \case
-  Nothing -> pure iss
-  Just is' -> do
-    icons <- liftIO $ FP.find always (extension ==? ".svg") root
-    pure (is' { isIconList = normalizeIconName root <$> icons } : iss)
-  where
-    root = takeDirectory fp
+  => ([Tree], [Text]) -> FilePath -> RIO env ([Tree], [Text])
+loadIcon (els, ns) fp = liftIO (loadSvgFile fp) >>= \case
+  Nothing  -> pure (els, ns)
+  Just doc@Document{..} -> pure (symbol : els, name : ns)
+    where
+      symbol = SymbolTree (toSymbol doc)
+      name = fromString (takeBaseName _documentLocation)
 
-normalizeIconName :: FilePath -> FilePath -> Text
-normalizeIconName root fp = fromString
-  . intercalate "-" . splitDirectories
-  . dropExtension
-  $ dropPrefix (root <> "/") fp
+toSymbol :: Document -> Symbol Tree
+toSymbol Document{..} = defaultSvg
+  & over (groupOfSymbol . groupDrawAttributes)
+         (set attrId $ Just $ takeBaseName _documentLocation)
+  & over groupOfSymbol (set groupViewBox _viewBox)
+  & over groupOfSymbol (set groupChildren _elements)
+
+emptyDocument :: Document
+emptyDocument = Document Nothing Nothing Nothing [] M.empty "" [] ""
