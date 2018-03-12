@@ -41,8 +41,8 @@ start = do
     nt env = NT (Servant.Handler . runRIO env)
 
 loadIconSet'
-  :: HasLogFunc env =>
-     [IconSet] -> FilePath -> RIO env [IconSet]
+  :: HasLogFunc env
+  => [IconSet] -> FilePath -> RIO env [IconSet]
 loadIconSet' isl meta = loadIconSet meta >>= \case
   Left err -> do
     logError (fromString $ printf "Error processing icon set %s" meta)

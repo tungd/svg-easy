@@ -67,10 +67,10 @@ loadIcon (els, ns) fp = liftIO (loadSvgFile fp) >>= \case
 
 toSymbol :: Document -> Symbol Tree
 toSymbol Document{..} = defaultSvg
-  & over (groupOfSymbol . groupDrawAttributes)
-         (set attrId $ Just $ takeBaseName _documentLocation)
-  & over groupOfSymbol (set groupViewBox _viewBox)
-  & over groupOfSymbol (set groupChildren _elements)
+  & set (groupOfSymbol . groupDrawAttributes . attrId)
+        (Just $ takeBaseName _documentLocation)
+  & set (groupOfSymbol . groupViewBox) _viewBox
+  & set (groupOfSymbol . groupChildren) _elements
 
 emptyDocument :: Document
 emptyDocument = Document Nothing Nothing Nothing [] M.empty "" [] ""
