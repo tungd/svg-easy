@@ -1,0 +1,20 @@
+<div class="component component-tab">
+  {{yield}}
+</div>
+
+<script>
+  component.exports = {
+    on: {
+      init: function() {
+        this.on('*.tabselect', this.tabselect.bind(this))
+        this.parent.on('*.tabselect', this.tabselect.bind(this))
+      },
+    },
+
+    tabselect: function(e) {
+      this.findAllComponents('tabpane').forEach(pane => {
+        pane.set('active', pane.get('id') === e.get('target'))
+      })
+    }
+  }
+</script>

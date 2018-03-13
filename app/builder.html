@@ -1,45 +1,74 @@
+<link rel="ractive" href="tab.html" name="tab">
+<link rel="ractive" href="tabtitle.html" name="tabtitle">
+<link rel="ractive" href="tabpane.html" name="tabpane">
 <link rel="ractive" href="collapsible.html" name="collapsible">
 
 <div class="mv4">
-  <div class="tab-selector flex">
-    <h2 class="f4 bg-near-black white mv0 pv2 ph3">Select Icons</h2>
-    <h2 class="f4 gray mv0 pv2 ph3 pointer">Customize Names</h2>
-    <h2 class="f4 gray mv0 pv2 ph3 pointer">Download</h2>
-  </div>
+  <tab>
+    <div class="tab-selector flex">
+      <tabtitle target="tab-select">
+        <h2 class="f4 bg-near-black white mv0 pv2 ph3">
+          Select Icons
+        </h2>
+      </tabtitle>
 
-  <div class="pa3 bt">
-    <form>
-      <input name="filter" type="search" value="{{filter}}" placeholder="Search"/>
-      <input id="size" name="size" type="range" min="16" max="128" value="{{size}}"/>
-      <label for="size">{{size}}px</label>
-    </form>
+      <tabtitle target="tab-customize">
+        <h2 class="f4 gray mv0 pv2 ph3 pointer">
+          Customize Names
+        </h2>
+      </tabtitle>
 
-    {{#sets}}
-    <collapsible>
-      {{#partial title}}
-      {{name}}
-      <small class="ml3 gray fw4">
-        {{version}} - License: {{license}} -
-        <a href="{{homepage}}" title="Home page" target="_blank" rel="noopener">
-          {{homepage}}
-        </a>
-      </small>
-      {{/partial}}
+      <tabtitle target="tab-download">
+        <h2 class="f4 gray mv0 pv2 ph3 pointer">
+          Download
+        </h2>
+      </tabtitle>
+    </div>
 
-      <div class="flex flex-wrap">
-        {{#iconList}}
-        <div class="icon pa3 ma2 pointer selected-{{selected}} hidden-{{hidden}}" on-click="select">
-          <div class="sizer">
-            <svg class="w-100 h-100">
-              <use xlink:href="font-awesome.svg#{{name}}"/>
-            </svg>
+    <div class="tab-container pa3 bt">
+      <tabpane id="tab-select" active="true">
+        <form>
+          <input name="filter" type="search" value="{{filter}}" placeholder="Search"/>
+          <input id="size" name="size" type="range" min="16" max="128" value="{{size}}"/>
+          <label for="size">{{size}}px</label>
+        </form>
+
+        {{#sets}}
+        <collapsible>
+          {{#partial title}}
+          {{name}}
+          <small class="ml3 gray fw4">
+            {{version}} - License: {{license}} -
+            <a href="{{homepage}}" title="Home page" target="_blank" rel="noopener">
+              {{homepage}}
+            </a>
+          </small>
+          {{/partial}}
+
+          <div class="flex flex-wrap">
+            {{#iconList}}
+            <div class="icon pa3 ma2 pointer selected-{{selected}} hidden-{{hidden}}" on-click="select">
+              <div class="sizer">
+                <svg class="w-100 h-100">
+                  <use xlink:href="font-awesome.svg#{{name}}"/>
+                </svg>
+              </div>
+            </div>
+            {{/iconList}}
           </div>
-        </div>
-        {{/iconList}}
-      </div>
-    </collapsible>
-    {{/sets}}
-  </div>
+        </collapsible>
+        {{/sets}}
+      </tabpane>
+
+      <tabpane id="tab-customize">
+        Customize
+      </tabpane>
+
+      <tabpane id="tab-download">
+        Download
+      </tabpane>
+    </div>
+  </tab>
 </div>
 
 <style>
