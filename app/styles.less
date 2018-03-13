@@ -1,5 +1,38 @@
 @import (less) '../node_modules/tachyons/css/tachyons.css';
 
+.focus-b--blue {
+  &:focus {
+    border-color: blue;
+  }
+}
+
+input[type="search"], input[type="text"], select, textarea {
+  .focus-b--blue; .fw3; .input-reset;
+  .ba; .bg-white; .pa2; .outline-0; .br0;
+}
+
+.button-reset {
+  &::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+  }
+}
+
+.pointer {
+  &:hover { cursor: pointer; }
+}
+
+button, .button {
+  .fw5; .bn; .button-reset;
+  .pa0; .pointer; .white; .pv2; .ph3; .br1; .outline-0;
+  background: blue;
+}
+
+button.button-simple {
+  color: #222;
+  background: transparent;
+}
+
 .icon {
   border-radius: 50%;
 
