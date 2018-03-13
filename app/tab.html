@@ -12,8 +12,14 @@
     },
 
     tabselect: function(e) {
+      const target = e.get('target')
+
       this.findAllComponents('tabpane').forEach(pane => {
-        pane.set('active', pane.get('id') === e.get('target'))
+        pane.set('active', pane.get('id') === target)
+      })
+
+      this.findAllComponents('tabtitle').forEach(pane => {
+        pane.set('active', pane.get('target') === target)
       })
     }
   }
