@@ -30,6 +30,8 @@ dependencies:
 - filemanip
 - svg-tree
 - http-api-data
+- zip-archive
+- time
 
 default-extensions:
 - NoImplicitPrelude
