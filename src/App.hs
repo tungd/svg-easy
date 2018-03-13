@@ -1,6 +1,8 @@
 module App where
 
 import Codec.Archive.Zip
+import Data.Time.Clock.POSIX
+import Graphics.Svg (Document, xmlOfDocument, saveXmlFile)
 import Network.Wai.Handler.Warp
 import Network.Wai.Middleware.Static
 import RIO
@@ -8,10 +10,10 @@ import RIO.FilePath
 import Servant
 import System.FilePath.Find
 import Text.Printf
-import Data.Time.Clock.POSIX
+import Text.XML.Light.Output
 
-import qualified Graphics.Svg as Svg
 import qualified System.FilePath.Find as FP
+import qualified RIO.ByteString.Lazy as BL
 
 import SVGEasy.IconSet
 import SVGEasy.IconSetBuild
@@ -26,12 +28,11 @@ data Env = Env
 instance HasLogFunc Env where
   logFuncL = lens envLogFunc (\e f -> e { envLogFunc = f })
 
-type IconSetDownload =
-  ReqBody '[FormUrlEncoded] IconSetBuildSpec
-  :> Download Post DownloadArchive
+type DownloadIconSet =
+  ReqBody '[FormUrlEncoded] IconSetBuildSpec :> Download Post DownloadArchive
 
 type SVGEasyAPI = "icon-sets" :> Get '[JSON] [IconSet]
-  :<|> "download" :> IconSetDownload
+  :<|> "download" :> DownloadIconSet
 
 newtype DownloadArchive = DownloadArchive { unArchive :: Archive }
 
@@ -62,7 +63,7 @@ loadIconSet' isl meta = loadIconSet meta >>= \case
     pure isl
   Right is@IconSet{..} -> do
     logInfo (fromString $ printf "Writing sprite for icon set %s..." dest)
-    liftIO $ Svg.saveXmlFile ("public" </> dest <.> "svg") isSprite
+    liftIO $ saveXmlFile ("public" </> dest <.> "svg") isSprite
     pure (is : isl)
   where
     dest = takeBaseName (takeDirectory meta)
@@ -77,8 +78,11 @@ app = listIconSet :<|> buildIconSet
     listIconSet = asks envIconSetList
 
     buildIconSet spec = do
-      logDebug (displayShow spec)
+      sprite <- buildSprite "svgicons.svg" spec
       now <- round <$> liftIO getPOSIXTime
       download "svgicons.zip" $ DownloadArchive $ emptyArchive
-        & addEntryToArchive (toEntry "svgicons.svg" now "")
+        & addEntryToArchive (toEntry "svgicons.svg" now $ svgToByteString sprite)
         & addEntryToArchive (toEntry "preview.html" now "<h1>Hello, World</h1>")
+
+svgToByteString :: Document -> BL.ByteString
+svgToByteString = fromString . ppcTopElement prettyConfigPP . xmlOfDocument

@@ -42,7 +42,7 @@ data IconSet = IconSet
 instance ToJSON IconSet where
   toJSON = toJSON . isMeta
 
-data Icon = Icon { iName :: Text }
+newtype Icon = Icon { iName :: Text }
   deriving (Show, Generic)
 
 instance ToJSON Icon where
