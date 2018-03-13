@@ -2,17 +2,18 @@
 
 ## Features
 
+- [ ] Selected tab
+- [ ] Download tab
+- [ ] More icon set
 - [ ] Favicon and icon
 - [ ] About page
 - [ ] Help page
 - [ ] Donation link
 - [ ] Service worker
-- [ ] Customize tab
-- [ ] Download tab
 - [ ] API document page
 - [ ] API
-- [ ] More icon set
 - [ ] SEO: Twitter, open Github
+- [x] Customize tab
 
 ## License
 

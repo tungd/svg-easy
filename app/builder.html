@@ -72,7 +72,7 @@
               </div>
             </label>
             <input id="icon-{{key}}" name="icon-{{}}" type="text" value="{{name}}"/>
-            <button class="pointer" on-click="unselect">&times;</button>
+            <button class="pointer" on-click="deselect">&times;</button>
           </div>
           {{/selected}}
         </div>
@@ -115,11 +115,30 @@
       select: function(e) {
         const keypath = e.get('@keypath')
         const selected = e.get(`${keypath}.selected`)
-        this.set(`${keypath}.selected`, !selected)
-
-        const iconset = e.get('id')
         const name = e.get('name')
-        this.set(`selected.${name}`, { name, keypath, iconset })
+
+        // TODO: there is better way to do this
+        if (!selected) {
+          this.set(`${keypath}.selected`, true)
+
+          const iconset = e.get('id')
+          this.set(`selected.${name}`, { name, keypath, iconset })
+        } else {
+          this.set(`${keypath}.selected`, false)
+
+          let selected = this.get('selected')
+          delete selected[name]
+          this.set('selected', selected)
+        }
+      },
+
+      deselect: function(e) {
+        const keypath = e.get('keypath')
+        this.set(`${keypath}.selected`, false)
+
+        let selected = this.get('selected')
+        delete selected[e.get('key')]
+        this.set('selected', selected)
       }
     },
 
