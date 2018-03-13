@@ -87,8 +87,8 @@
       <tabpane id="tab-download">
         <section>
           <h2>Step 1</h2>
-          <form action="/download" method="POST">
-            <textarea name="config" class="w-100" rows="32" twoway="false" hidden>{{JSON.stringify(selected, null, 2)}}</textarea>
+          <form action="/download" method="POST" target="_blank">
+            <textarea name="spec" class="w-100" rows="32" twoway="false" hidden>{{JSON.stringify(selected, null, 2)}}</textarea>
             <p>
               <button>Download the spritesheet</button>,
               then add <code>svgicons.svg</code> to your project.
@@ -98,7 +98,7 @@
         <section class="mt4">
           <h2>Step 2</h2>
           <p>Include the following snippet wherever you want to show the icon:</p>
-          <code><pre>{{sample}}</pre></code>
+          <code class="bg-light-gray db pa3 measure-wide"><pre>{{sample}}</pre></code>
           <p>Don't forget to replace <code>name</code> with the actual name of the icon.</p>
         </section>
         <section class="mt4">

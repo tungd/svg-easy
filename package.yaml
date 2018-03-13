@@ -29,6 +29,7 @@ dependencies:
 - aeson
 - filemanip
 - svg-tree
+- http-api-data
 
 default-extensions:
 - NoImplicitPrelude
@@ -44,6 +45,8 @@ default-extensions:
 - DataKinds
 - KindSignatures
 - MultiParamTypeClasses
+- TypeSynonymInstances
+- FlexibleInstances
 
 ghc-options:
 - -Wall
