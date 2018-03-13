@@ -47,7 +47,7 @@
 
           <div class="flex flex-wrap">
             {{#iconList}}
-            <div class="icon pa3 ma2 pointer selected-{{selected}} hidden-{{hidden}}" on-click="select">
+            <div class="icon pa3 ma2 pointer selected-{{.selected}} hidden-{{.hidden}}" on-click="select">
               <div class="sizer">
                 <svg class="w-100 h-100">
                   <use xlink:href="font-awesome.svg#{{name}}"/>
@@ -61,11 +61,25 @@
       </tabpane>
 
       <tabpane id="tab-customize">
-        Customize
+        <div class="flex flex-wrap">
+          {{#selected:key}}
+          <div class="pa3 ma2 flex">
+            <label for="icon-{{key}}" class="pointer mr3">
+              <div class="sizer">
+                <svg class="w-100 h-100">
+                  <use xlink:href="font-awesome.svg#{{key}}"/>
+                </svg>
+              </div>
+            </label>
+            <input id="icon-{{key}}" name="icon-{{}}" type="text" value="{{name}}"/>
+            <button class="pointer" on-click="unselect">&times;</button>
+          </div>
+          {{/selected}}
+        </div>
       </tabpane>
 
       <tabpane id="tab-download">
-        Download
+        <textarea class="w-100" rows="32" twoway="false">{{JSON.stringify(selected, null, 2)}}</textarea>
       </tabpane>
     </div>
   </tab>
@@ -85,7 +99,8 @@
     data: () => ({
       filter: '',
       size: 24,
-      sets: []
+      sets: [],
+      selected: {}
     }),
 
     on: {
@@ -99,8 +114,12 @@
 
       select: function(e) {
         const keypath = e.get('@keypath')
-        const selected = e.get('selected')
+        const selected = e.get(`${keypath}.selected`)
         this.set(`${keypath}.selected`, !selected)
+
+        const iconset = e.get('id')
+        const name = e.get('name')
+        this.set(`selected.${name}`, { name, keypath, iconset })
       }
     },
 
