@@ -1,9 +1,4 @@
-module SVGEasy.IconSet
-  ( IconSet(..)
-  , IconSetMeta(..)
-  , Icon(..)
-  , loadIconSet
-  ) where
+module SVGEasy.IconSet where
 
 import Data.Aeson
 import Graphics.Svg hiding (Text)

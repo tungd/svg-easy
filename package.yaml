@@ -33,6 +33,8 @@ dependencies:
 - zip-archive
 - time
 - xml
+- microstache
+- text
 
 default-extensions:
 - NoImplicitPrelude

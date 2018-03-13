@@ -1,19 +1,23 @@
 module App where
 
 import Codec.Archive.Zip
+import Data.Aeson
 import Data.Time.Clock.POSIX
 import Graphics.Svg (Document, xmlOfDocument, saveXmlFile)
 import Network.Wai.Handler.Warp
 import Network.Wai.Middleware.Static
 import RIO
 import RIO.FilePath
+import RIO.Map
 import Servant
 import System.FilePath.Find
+import Text.Microstache
 import Text.Printf
 import Text.XML.Light.Output
 
-import qualified System.FilePath.Find as FP
+import qualified Data.Text.Lazy.Encoding as TL
 import qualified RIO.ByteString.Lazy as BL
+import qualified System.FilePath.Find as FP
 
 import SVGEasy.IconSet
 import SVGEasy.IconSetBuild
@@ -23,6 +27,7 @@ import Servant.Download
 data Env = Env
   { envLogFunc :: LogFunc
   , envIconSetList :: [IconSet]
+  , envPreviewTemplate :: Template
   }
 
 instance HasLogFunc Env where
@@ -42,6 +47,8 @@ instance MimeRender OctetStream DownloadArchive where
 
 start :: IO ()
 start = do
+  envPreviewTemplate <- compileMustacheFile "templates/preview.html"
+
   options <- logOptionsHandle stdout True
   withLogFunc options $ \envLogFunc -> do
     iss <- liftIO $ FP.find always (filePath ~~? "**/set.json") "resources"
@@ -79,10 +86,16 @@ app = listIconSet :<|> buildIconSet
 
     buildIconSet spec = do
       sprite <- buildSprite "svgicons.svg" spec
+      previewTemplate <- asks envPreviewTemplate
       now <- round <$> liftIO getPOSIXTime
       download "svgicons.zip" $ DownloadArchive $ emptyArchive
         & addEntryToArchive (toEntry "svgicons.svg" now $ svgToByteString sprite)
-        & addEntryToArchive (toEntry "preview.html" now "<h1>Hello, World</h1>")
+        & addEntryToArchive (toEntry "preview.html" now $ preview previewTemplate spec)
 
 svgToByteString :: Document -> BL.ByteString
-svgToByteString = fromString . ppcTopElement prettyConfigPP . xmlOfDocument
+svgToByteString = fromString
+  . ppcTopElement prettyConfigPP . xmlOfDocument
+
+preview :: Template -> IconSetBuildSpec -> BL.ByteString
+preview tmpl spec = TL.encodeUtf8
+  . renderMustache tmpl $ object [ "spec" .= elems spec ]

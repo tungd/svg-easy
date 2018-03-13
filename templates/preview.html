@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8"/>
+    <title>SVG Icons Preview</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tachyons/4.9.1/tachyons.css" rel="stylesheet"/>
+  </head>
+  <body>
+    <div>
+      {{#spec}}
+      <svg><use xlink:href="svgicons.svg#{{name}}"/></svg>
+      {{/spec}}
+    </div>
+  </body>
+</html>
