@@ -2,18 +2,21 @@
 
 ## Features
 
-- [ ] Selected tab
-- [ ] Download tab
-- [ ] More icon set
+- [ ] humans.txt
+- [ ] Sitemap
 - [ ] Favicon and icon
+- [ ] More icon set
 - [ ] About page
 - [ ] Help page
 - [ ] Donation link
-- [ ] Service worker
 - [ ] API document page
 - [ ] API
 - [ ] SEO: Twitter, open Github
+- [ ] Service worker
+- [ ] Ads
 - [x] Customize tab
+- [x] Selected tab
+- [x] Download tab
 
 ## License
 
