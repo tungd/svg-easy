@@ -12,6 +12,7 @@ import qualified Graphics.Svg as Svg
 import qualified System.FilePath.Find as FP
 
 import SVGEasy.IconSet
+import SVGEasy.IconSetBuild
 
 
 data Env = Env
@@ -24,6 +25,7 @@ instance HasLogFunc Env where
 
 
 type SVGEasyAPI = "icon-sets" :> Get '[JSON] [IconSet]
+  :<|> "download" :> ReqBody '[FormUrlEncoded] IconSetBuildSpec :> Post '[JSON] Text
 
 
 start :: IO ()
@@ -35,10 +37,9 @@ start = do
     runEnv 4000
       $ staticPolicy (defaultIndex >-> addBase "public")
       $ staticPolicy (addBase "resources")
-      $ serve api $ enter (nt Env{..}) app
+      $ serve api $ hoistServer api (runRIO Env{..}) app
   where
     api = Proxy :: Proxy SVGEasyAPI
-    nt env = NT (Servant.Handler . runRIO env)
 
 loadIconSet'
   :: HasLogFunc env
@@ -60,6 +61,9 @@ defaultIndex = policy $ \path ->
   Just $ if path == "" then "index.html" else path
 
 app :: ServerT SVGEasyAPI (RIO Env)
-app = listIconSet
+app = listIconSet :<|> buildIconSet
   where
     listIconSet = asks envIconSetList
+    buildIconSet spec = do
+      logDebug (displayShow spec)
+      pure (fromString $ show spec)
