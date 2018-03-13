@@ -1,4 +1,4 @@
-let Ractive = require('ractive')
+let Ractive = require('ractive/runtime')
 
 Ractive.DEBUG = /unminified/.test(function(){/*unminified*/});
 Ractive.DEBUG_PROMISES = true
