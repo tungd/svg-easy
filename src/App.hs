@@ -83,9 +83,12 @@ defaultIndex = policy $ \path ->
   Just $ if path == "" then "index.html" else path
 
 app :: ServerT SVGEasyAPI (RIO Env)
-app = listIconSet :<|> buildIconSet :<|> emptyData :<|> emptyData
+app = listIconSet :<|> buildIconSet
+  :<|> page "Browser support"
+  :<|> page "Tips and tricks"
   where
-    emptyData = pure (object [])
+    page :: Monad m => String -> m Value
+    page title = pure (object [ "title" .= title ])
 
     listIconSet = asks envIconSetList
 

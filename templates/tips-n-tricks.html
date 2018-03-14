@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    {{>head}}
+  </head>
+  <body class="sans-serif ma0 black-80">
+    {{>header}}
+
+    <div class="container min-vh-100 mw8 center">
+      <main id="main">
+        <h2 id="custom-icon-color">Customize the size</h2>
+
+        <p class="lh-copy measure-wide">
+          The easiest way to set the size of the icon is to add
+          <code>width</code> and <code>height</code> attribute to the SVG tag.
+          Another way is to wrap the icon inside an HTML element with specified
+          width and height.
+        </p>
+
+        <h2 id="custom-icon-color">Customize the color</h2>
+
+        <p class="lh-copy measure-wide">
+          You can customize the color of the icons with the <code>fill</code>
+          and <code>stroke</code> property. And it works for hovering too,
+          for example:
+        </p>
+
+        <div class="flex">
+          <code class="bg-light-gray db pa3 measure-wide flex-auto"><pre>&lt;div class="icon"&gt;
+  &lt;svg&gt;
+    &lt;use xlink:href="font-awesome-solid.svg#heart"/&gt;
+  &lt;/svg&gt;
+&lt;/div&gt;
+
+.icon-heart {
+  fill: red;
+}
+
+.icon-heart:hover {
+  fill: orange;
+}
+          </pre></code>
+
+          <style>
+            .icon-heart {
+              fill:red;
+              margin-top:2rem
+            }
+            .icon-heart:hover {
+              fill: orange;
+            }
+          </style>
+          <div class="icon-heart">
+            <svg><use xlink:href="font-awesome-solid.svg#heart"/></svg>
+          </div>
+
+        </div>
+      </main>
+    </div>
+  </body>
+</html>
