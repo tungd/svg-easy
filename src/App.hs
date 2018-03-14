@@ -22,6 +22,7 @@ import qualified System.FilePath.Find as FP
 import SVGEasy.IconSet
 import SVGEasy.IconSetBuild
 import Servant.Download
+import Servant.Mustache
 
 
 data Env = Env
@@ -38,6 +39,8 @@ type DownloadIconSet =
 
 type SVGEasyAPI = "icon-sets" :> Get '[JSON] [IconSet]
   :<|> "download" :> DownloadIconSet
+  :<|> "about" :> Get '[HTML "about"] Value
+  :<|> "help" :> Get '[HTML "help"] Value
 
 newtype DownloadArchive = DownloadArchive { unArchive :: Archive }
 
@@ -80,8 +83,10 @@ defaultIndex = policy $ \path ->
   Just $ if path == "" then "index.html" else path
 
 app :: ServerT SVGEasyAPI (RIO Env)
-app = listIconSet :<|> buildIconSet
+app = listIconSet :<|> buildIconSet :<|> emptyData :<|> emptyData
   where
+    emptyData = pure (object [])
+
     listIconSet = asks envIconSetList
 
     buildIconSet spec = do

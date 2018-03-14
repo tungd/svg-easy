@@ -11,13 +11,14 @@ import GHC.TypeLits
 import Network.HTTP.Media ((//), (/:))
 import Network.HTTP.Types
 import RIO
-import RIO.Directory
 import Servant
+import System.FilePath.Find
 import System.IO.Unsafe
 import Text.Microstache
 
-import qualified RIO.Map as M
 import qualified Data.Text.Lazy.Encoding as TL
+import qualified RIO.Map as M
+import qualified System.FilePath.Find as FP
 
 
 data Tpl (ct :: *) (file :: Symbol)
@@ -78,7 +79,7 @@ htmlErr err@ServantErr{..} name val = do
 
 compileMustacheDir' :: MonadIO m => PName -> FilePath -> m Template
 compileMustacheDir' pname path =
-  liftIO $ getDirectoryContents path >>=
+  liftIO $ FP.find always (fileType ==? RegularFile) path >>=
   fmap selectKey . foldM f (Template undefined M.empty)
   where
     selectKey t = t { templateActual = pname }
