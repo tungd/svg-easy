@@ -2,18 +2,20 @@
 
 ## Features
 
+- [ ] change preview to cheatsheet, because preview does not work
+- [ ] escape regex properly
 - [ ] humans.txt
 - [ ] Sitemap
-- [ ] Favicon and icon
 - [ ] More icon set
 - [ ] About page
 - [ ] Help page
 - [ ] Donation link
-- [ ] API document page
-- [ ] API
 - [ ] SEO: Twitter, open Github
-- [ ] Service worker
 - [ ] Ads
+- [ ] API
+- [ ] API document page
+- [ ] Service worker
+- [x] Favicon and icon
 - [x] Customize tab
 - [x] Selected tab
 - [x] Download tab
