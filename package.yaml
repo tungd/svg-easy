@@ -35,6 +35,8 @@ dependencies:
 - xml
 - microstache
 - text
+- http-types
+- http-media
 
 default-extensions:
 - NoImplicitPrelude
