@@ -5,16 +5,14 @@
 - [ ] change preview to cheatsheet, because preview does not work
 - [ ] escape regex properly
 - [ ] humans.txt
-- [ ] Sitemap
 - [ ] More icon set
-- [ ] About page
-- [ ] Help page
-- [ ] Donation link
 - [ ] SEO: Twitter, open Github
 - [ ] Ads
+- [ ] Donation link
 - [ ] API
 - [ ] API document page
 - [ ] Service worker
+- [x] Sitemap
 - [x] Favicon and icon
 - [x] Customize tab
 - [x] Selected tab
