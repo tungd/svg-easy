@@ -39,8 +39,8 @@ type DownloadIconSet =
 
 type SVGEasyAPI = "icon-sets" :> Get '[JSON] [IconSet]
   :<|> "download" :> DownloadIconSet
-  :<|> "about" :> Get '[HTML "about"] Value
-  :<|> "help" :> Get '[HTML "help"] Value
+  :<|> "browser-support" :> Get '[HTML "browser-support"] Value
+  :<|> "tips-n-tricks" :> Get '[HTML "tips-n-tricks"] Value
 
 newtype DownloadArchive = DownloadArchive { unArchive :: Archive }
 
