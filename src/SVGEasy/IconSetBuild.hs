@@ -34,9 +34,10 @@ instance FromForm IconSetBuildSpec where
 buildSprite
   :: (HasLogFunc env)
   => FilePath -> IconSetBuildSpec -> RIO env Document
-buildSprite fp spec = do
+buildSprite _ spec = do
   (icons, _) <- foldM loadIcon ([], []) (svgFiles <$> assocs spec)
   pure $ emptyDocument & set elements icons
 
 svgFiles :: (Text, IconSpec) -> FilePath
-svgFiles (k, IconSpec{..}) = "resources" </> T.unpack specIconset </> T.unpack k <.> "svg"
+svgFiles (k, IconSpec{..}) =
+  "resources" </> T.unpack specIconset </> T.unpack k <.> "svg"
