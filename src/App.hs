@@ -41,6 +41,7 @@ type SVGEasyAPI = "icon-sets" :> Get '[JSON] [IconSet]
   :<|> "download" :> DownloadIconSet
   :<|> "browser-support" :> Get '[HTML "browser-support"] Value
   :<|> "tips-n-tricks" :> Get '[HTML "tips-n-tricks"] Value
+  :<|> Get '[HTML "index"] Value
 
 newtype DownloadArchive = DownloadArchive { unArchive :: Archive }
 
@@ -86,6 +87,7 @@ app :: ServerT SVGEasyAPI (RIO Env)
 app = listIconSet :<|> buildIconSet
   :<|> page "Browser support"
   :<|> page "Tips and tricks"
+  :<|> page ""
   where
     page :: Monad m => String -> m Value
     page title = pure (object [ "title" .= title ])
