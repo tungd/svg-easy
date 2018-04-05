@@ -2,8 +2,10 @@
 
 ## Features
 
+- [ ] support custom svg
 - [ ] change preview to cheatsheet, because preview does not work
 - [ ] escape regex properly
+- [ ] add license files to archive
 - [ ] humans.txt
 - [ ] More icon set
 - [ ] SEO: Twitter, open Github
@@ -12,6 +14,7 @@
 - [ ] API
 - [ ] API document page
 - [ ] Service worker
+- [x] Social sharing buttons
 - [x] Sitemap
 - [x] Favicon and icon
 - [x] Customize tab
