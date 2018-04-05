@@ -58,8 +58,8 @@ loadIconSet fp = eitherDecode <$> liftIO (BL.readFile fp) >>= \case
     pure . Right $ IconSet (meta { isIconList = names }) $ emptyDocument
       & set documentLocation fp
       & set elements icons
-    where
-      root = takeDirectory fp
+  where
+    root = takeDirectory fp
 
 loadIcon
   :: (HasLogFunc env)

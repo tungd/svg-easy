@@ -59,7 +59,6 @@ start = do
     envIconSetList <- runRIO envLogFunc (foldM loadIconSet' [] iss)
     runEnv 4000
       $ staticPolicy (defaultIndex >-> addBase "public")
-      $ staticPolicy (addBase "resources")
       $ serve api $ hoistServer api (runRIO Env{..}) app
   where
     api = Proxy :: Proxy SVGEasyAPI
