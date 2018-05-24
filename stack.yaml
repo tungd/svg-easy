@@ -1,7 +1,7 @@
-resolver: lts-11.0
+resolver: lts-11.4
 packages:
 - .
 extra-deps:
-- rio-0.0.3.0
+- rio-0.1.1.0
 - git: git@github.com:tungd/svg-tree.git
   commit: 290dd34f622d2640d4d045908904577afe83c41f

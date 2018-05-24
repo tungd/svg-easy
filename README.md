@@ -8,12 +8,14 @@
 - [ ] add license files to archive
 - [ ] humans.txt
 - [ ] More icon set
+- [ ] SVG icon pack and market place
 - [ ] SEO: Twitter, open Github
 - [ ] Ads
 - [ ] Donation link
 - [ ] API
 - [ ] API document page
 - [ ] Service worker
+- [ ] Blog
 - [x] Social sharing buttons
 - [x] Sitemap
 - [x] Favicon and icon
