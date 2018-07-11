@@ -9,5 +9,6 @@ build_script:
   - stack setup
   - stack build
   - cp config/svg-easy.service /etc/systemd/system
+  - find .stack-work/install -name svg-easy-exe -exec cp {} . \;
   - systemctl daemon-reload
 restart_command: systemctl restart svg-easy

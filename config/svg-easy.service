@@ -8,7 +8,7 @@ Restart=on-abnormal
 Environment=ENV=production
 Environment=PORT=4001
 WorkingDirectory=/var/www/svg-easy/current
-ExecStart=/var/www/svg-easy/current/.stack-work/dist/x86_64-linux/Cabal-2.0.1.0/build/svg-easy-exe/svg-easy-exe
+ExecStart=/var/www/svg-easy/current/svg-easy-exe
 
 [Install]
 WantedBy=multi-user.target
