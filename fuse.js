@@ -81,9 +81,6 @@ const fuse = FuseBox.init({
       outFile: file => `public/${file}`,
       minify: true
     })],
-    CopyPlugin({
-      files: ['.*']
-    }),
     QuantumPlugin({
       bakeApiIntoBundle: 'app',
       treeshake : true,

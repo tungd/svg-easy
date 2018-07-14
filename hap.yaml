@@ -5,7 +5,7 @@ repo: 'git@github.com:tungd/svg-easy.git'
 revision: origin/master
 build_script:
   - npm install
-  - npm run build
+  - node fuse
   - stack setup
   - stack build
   - cp config/svg-easy.service /etc/systemd/system
