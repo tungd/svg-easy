@@ -10,16 +10,16 @@
     "build": "brunch build --production"
   },
   "dependencies": {
-    "ractive": "^0.9.14",
+    "ractive": "^0.10.4",
     "tachyons": "^4.10.0"
   },
   "devDependencies": {
-    "babel-brunch": "^6.1.1",
+    "babel-core": "^6.26.3",
     "babel-preset-env": "^1.7.0",
-    "brunch": "^2.10.12",
-    "clean-css-brunch": "^2.10.0",
-    "less-brunch": "^2.10.0",
-    "ractive-component-brunch": "^0.9.16",
-    "uglify-js-brunch": "^2.10.0"
+    "fuse-box": "^3.4.0",
+    "less": "^3.7.1",
+    "rcu": "^0.11.0",
+    "typescript": "^2.9.2",
+    "uglify-js": "^3.4.4"
   }
 }

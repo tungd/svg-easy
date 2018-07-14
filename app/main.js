@@ -1,13 +1,11 @@
-let Ractive = require('ractive/runtime')
+import './styles.less'
+const Ractive = require('ractive/runtime')
+import Builder from './builder.html'
 
 Ractive.DEBUG = /unminified/.test(function(){/*unminified*/});
 Ractive.DEBUG_PROMISES = true
 
-
-const SVGBuilder = require('builder.html')
-const builder = new SVGBuilder({ el: '#main' })
-
-window.__builder = builder
+const builder = new Builder({ el: '#main' })
 
 fetch(`/icon-sets`)
   .then(resp => resp.json())
