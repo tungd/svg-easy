@@ -37,6 +37,8 @@ dependencies:
 - text
 - http-types
 - http-media
+- heterocephalus
+- blaze-markup
 
 default-extensions:
 - NoImplicitPrelude
@@ -54,6 +56,8 @@ default-extensions:
 - MultiParamTypeClasses
 - TypeSynonymInstances
 - FlexibleInstances
+- OverloadedLabels
+- TemplateHaskell
 
 ghc-options:
 - -Wall

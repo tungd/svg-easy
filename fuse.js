@@ -70,7 +70,6 @@ const fuse = FuseBox.init({
   homeDir: 'app',
   output: 'public/$name.js',
   target : 'browser@es5',
-  useTypescriptCompiler: false,
   plugins: [
     new RactivePlugin(),
     [LESSPlugin({
