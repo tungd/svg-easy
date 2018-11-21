@@ -22,18 +22,18 @@ description:         Please see the README on Github at <https://github.com/tung
 dependencies:
 - base >= 4.7 && < 5
 - rio
+- data-has
 - wai
-- wai-middleware-static
+- wai-app-static
+- web-routes
+- www
 - warp
-- servant-server
 - aeson
 - filemanip
 - svg-tree
-- http-api-data
 - zip-archive
 - time
 - xml
-- microstache
 - text
 - http-types
 - http-media
@@ -56,6 +56,7 @@ default-extensions:
 - MultiParamTypeClasses
 - TypeSynonymInstances
 - FlexibleInstances
+- FlexibleContexts
 - OverloadedLabels
 - TemplateHaskell
 
