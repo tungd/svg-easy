@@ -1,6 +1,7 @@
-resolver: lts-12.8
+resolver: lts-12.16
 packages:
 - .
-extra-deps:
-- git: git@github.com:Twinside/svg-tree.git
-  commit: 7c08d2881e88a835718a369ea1a2daf45aa8174a
+- location:
+    git: git@github.com:tungd/haskell-www.git
+    commit: 02773d7c82db15387ba951363ba645ec7ae25948
+  extra-dep: true
