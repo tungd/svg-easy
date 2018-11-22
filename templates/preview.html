@@ -8,9 +8,9 @@
   </head>
   <body>
     <div>
-      {{#spec}}
-      <svg><use xlink:href="svgicons.svg#{{name}}"/></svg>
-      {{/spec}}
+      %{forall s <- spec}
+      <svg><use xlink:href="svgicons.svg##{specName s}"/></svg>
+      %{endforall}
     </div>
   </body>
 </html>

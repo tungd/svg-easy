@@ -5,7 +5,6 @@ import Graphics.Svg hiding (Text)
 import RIO
 import RIO.FilePath
 import RIO.Map
--- import Web.FormUrlEncoded
 
 import qualified RIO.Text as T
 
@@ -25,11 +24,6 @@ instance ToJSON IconSpec where
   toJSON = genericToJSON dropLabelPrefixOptions
 
 type IconSetBuildSpec = Map Text IconSpec
-
--- instance FromForm IconSetBuildSpec where
---   fromForm f = case parseUnique "spec" f of
---     Left err   -> Left err
---     Right spec -> mapLeft fromString (eitherDecode $ fromString spec)
 
 buildSprite
   :: (HasLogFunc env)

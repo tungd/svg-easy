@@ -24,6 +24,7 @@ dependencies:
 - rio
 - data-has
 - wai
+- wai-extra
 - wai-app-static
 - web-routes
 - www
@@ -38,7 +39,7 @@ dependencies:
 - http-types
 - http-media
 - heterocephalus
-- blaze-markup
+- blaze-html
 
 default-extensions:
 - NoImplicitPrelude
